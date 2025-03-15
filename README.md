@@ -131,6 +131,7 @@ streamlit run app.py
 uvicorn main:app --reload
 ```
 - Access API endpoints or use the chatbot.
+- Before executing, please ensure that you have set up the Groq API key in your .env file (GROQ_API_KEY).
 
 ### 3. Web Interface (`app.py`)
 - Start the Streamlit application:
