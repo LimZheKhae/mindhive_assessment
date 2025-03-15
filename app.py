@@ -8,18 +8,23 @@ st.set_page_config(page_title="KL Subway Outlets with Chatbot")
 
 st.title("Subway Outlets Map")
 
-# Fetch outlet data from FastAPI
-try:
-    response = requests.get("http://127.0.0.1:8000/outlets")
-    outlets = response.json()
-except Exception as e:
-    st.error(f"Error fetching outlets: {e}")
-    outlets = []
+# Initialize session state for outlet data if not already present
+if "outlets" not in st.session_state:
+    st.session_state.outlets = []
+
+# Fetch outlet data from FastAPI (only if not already fetched)
+if not st.session_state.outlets:
+    try:
+        response = requests.get("http://127.0.0.1:8000/outlets")
+        st.session_state.outlets = response.json()
+    except Exception as e:
+        st.error(f"Error fetching outlets: {e}")
+        st.session_state.outlets = []
 
 # Center map at Kuala Lumpur
 m = folium.Map(location=[3.1390, 101.6869], zoom_start=12)
 
-for outlet in outlets:
+for outlet in st.session_state.outlets:
     lat = outlet.get("latitude")
     lon = outlet.get("longitude")
     name = outlet.get("name")
@@ -85,11 +90,14 @@ for outlet in outlets:
             fill_opacity=0.03
         ).add_to(m)
 
+# Display the map
 st_data = st_folium(m, width=700)
 
 # Chatbot functionality
 st.subheader("Ask a Query")
-
+st.info(
+    "📖 **Note:** The chatbot's responses may not always be accurate, especially when executing complex SQL queries, due to the model's capabilities and limitations." 
+)
 # Initialize session state for query response if not already present
 if "query_response" not in st.session_state:
     st.session_state.query_response = None
@@ -103,8 +111,11 @@ if st.button("Submit"):
                 res = requests.post("http://127.0.0.1:8000/query", json={"query": query})
                 # The API returns a JSON with a single key "result"
                 st.session_state.query_response = res.json()
-                st.write(st.session_state.query_response)
             except Exception as e:
                 st.error(f"Error processing query: {e}")
     else:
         st.warning("Please enter a query.")
+
+# Display query response if available
+if st.session_state.query_response:
+    st.write(st.session_state.query_response)
