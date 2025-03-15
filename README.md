@@ -100,12 +100,7 @@ uvicorn main:app --reload
 - **Root Endpoint (`/`)**: Displays a welcome message.
 - **Get All Outlets (`/outlets`)**: Retrieves all Subway outlet records.
 - **Get a Specific Outlet (`/outlets/{outlet_id}`)**: Retrieves outlet details by ID.
-- **Execute a Query (`/query`)**:
-  ```python
-  @app.post("/query", response_model=str, summary="Execute a SQL query via LangGraph workflow")
-  ```
-  - Accepts user queries and executes them securely using LangGraph.
-  - Ensures safe query execution with validation and error handling.
+- **Execute a Query (`/query`)**: AI agents process natural language queries to retrieve relevant outlet information.
 
 ### 3. `app.py` (Streamlit Frontend)
 **Purpose:**
@@ -154,6 +149,7 @@ streamlit run app.py
 Refer to the following images for a visual demonstration of the project:
 
 - **Demo Chatbot Query:** `demo2.png` `demo1.png`
+![alt text](https://https://github.com/LimZheKhae/mindhive_assessment/blob/main/demo1.png)
 
 ---
 
