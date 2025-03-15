@@ -149,7 +149,8 @@ streamlit run app.py
 Refer to the following images for a visual demonstration of the project:
 
 - **Demo:**
-![Demo](https://raw.githubusercontent.com/LimZheKhae/mindhive_assessment/main/demo1.png)
+<img src="https://raw.githubusercontent.com/LimZheKhae/mindhive_assessment/main/demo1.png" width="800">
+<img src="https://raw.githubusercontent.com/LimZheKhae/mindhive_assessment/main/demo2.png" width="800">
 
 
 ---
