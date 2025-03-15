@@ -14,7 +14,8 @@ This project scrapes data from Subway Malaysia to gather information on Kuala Lu
 ### 1. Create and Activate Conda Environment
 ```bash
 conda create -n mindhive_assessment python=3.11
-conda activate mindhive_assessment ```
+conda activate mindhive_assessment 
+```
 
 ### 2. Clone Repository & Install Dependencies
 ```bash
