@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+langchain-groq
+langchain_community
+langchain_core
+langgraph
+selenium
+webdriver-manager
+googlemaps
+pandas
+streamlit
+folium
+streamlit-folium
+requests
