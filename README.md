@@ -1,162 +1,162 @@
 # Subway Outlets API & Web Scraper
 
-This project is designed to scrape Subway outlet data for Kuala Lumpur branches, store and process the data in a SQLite database, and expose the information via a FastAPI backend. A Streamlit-based web interface displays an interactive map and provides a chatbot functionality powered by LangChain/LangGraph for querying the data.
+This project scrapes Subway outlet data for Kuala Lumpur branches, stores it in a SQLite database, and exposes the data via a FastAPI backend. A Streamlit-based web interface provides an interactive map and chatbot functionality using LangChain/LangGraph.
 
 ---
 
 ## Prerequisites
 
-- **Anaconda Installation:**  
-  Ensure you have [Anaconda](https://www.anaconda.com/products/individual) installed.
+### Install Anaconda
+Ensure [Anaconda](https://www.anaconda.com/products/individual) is installed on your system.
 
-- **Conda Environment:**  
-  Create and activate a new conda environment named `mindhive_assessment`:
-  ```bash
-  conda create --name mindhive_assessment python=3.9
-  conda activate mindhive_assessment
-  ```
+### Create and Activate a Conda Environment
+Run the following commands:
+```
+conda create --name mindhive_assessment python=3.9
+conda activate mindhive_assessment
+```
+
+To deactivate the environment when finished:
+```
+conda deactivate
+```
+
+---
 
 ## Installation
 
 ### Clone the Repository:
-```bash
+```
 git clone <repository_url>
 cd <repository_directory>
 ```
 
 ### Install Dependencies:
-Install the required Python packages using the `requirements.txt` file:
-```bash
+Install the required packages using:
+```
 pip install -r requirements.txt
 ```
 
-### Setup API Keys & Selenium:
+---
 
-#### Selenium:
-The project uses Selenium along with `webdriver-manager` which automatically manages the Chrome driver.
+## Setup API Keys & Services
 
-#### Google Maps API:
-Create a `.env` file in the project root and add your Google Maps API key:
-```ini
+### Selenium Setup
+This project uses Selenium for web scraping. Follow these steps:
+
+1. Install `webdriver-manager` (already included in `requirements.txt`).
+2. Ensure you have Google Chrome installed.
+3. The `webdriver-manager` package will automatically manage the ChromeDriver.
+
+For more information, visit: [WebDriver Manager GitHub](https://github.com/SergeyPirogov/webdriver_manager)
+
+### Google Maps API Setup
+To enable Google Maps API, follow these steps:
+
+1. Visit [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Navigate to **APIs & Services > Enable APIs and Services**.
+4. Enable **Geocoding API**, **Maps JavaScript API**, and **Places API**.
+5. Generate an API key from **Credentials**.
+6. Create a `.env` file in your project root and add:
+```
 GOOGLE_MAP_API=your_google_maps_api_key
 ```
 
-#### Groq API:
-Also include your Groq API key in the `.env` file:
-```ini
+### Groq API Setup
+To obtain a Groq API key:
+
+1. Visit [Groq API](https://console.groq.com/).
+2. Sign up or log in.
+3. Navigate to **API Keys** and generate a new key.
+4. Add the key to the `.env` file:
+```
 GROQ_API_KEY=your_groq_api_key
 ```
 
-## Requirements File
+---
 
-Below is an example of a `requirements.txt` file for the project. Adjust or pin versions as needed:
-```nginx
-fastapi
-uvicorn
-pydantic
-python-dotenv
-langchain-groq
-langchain_community
-langchain_core
-langgraph
-selenium
-webdriver-manager
-googlemaps
-pandas
-streamlit
-folium
-streamlit-folium
-requests
-```
-Install the dependencies with:
-```bash
-pip install -r requirements.txt
-```
-
-## Project Structure & File-Level Specification
+## Project Structure
 
 ### 1. `scrape.ipynb`
 **Purpose:**
-- Performs web scraping and geocoding.
-- Extracts Subway store details (name, address, working hours) from Subway Malaysia for Kuala Lumpur branches.
-- Normalizes day names and time formats, and saves the processed data into a SQLite database (`subway.db`).
-- Updates missing geocodes using the Google Maps API.
+- Scrapes Subway store details (name, address, working hours) from Subway Malaysia for Kuala Lumpur branches.
+- Normalizes working hours format.
+- Saves data into a SQLite database (`subway.db`).
+- Updates missing geocodes using Google Maps API.
 
-**Key Components:**
-- **Day & Time Normalization:** Functions to convert short day names to full names and normalize time formats.
-- **Web Scraping:** Uses Selenium to extract store data.
-- **Data Storage:** Saves data to SQLite using Pandas.
-- **Geocoding:** Updates missing geographical coordinates via Google Maps API.
-
-### 2. `main.py`
+### 2. `main.py` (FastAPI Backend)
 **Purpose:**
-- Implements the FastAPI backend.
-- Exposes endpoints to retrieve all Subway outlets and individual outlet details.
-- Integrates a chatbot workflow using LangChain and LangGraph for dynamic SQL query processing.
+- Provides API endpoints to retrieve Subway outlet data.
+- Implements a chatbot workflow using LangChain/LangGraph for dynamic SQL query processing.
 
-**How to Run:**
-Start the FastAPI server with:
-```bash
+#### How to Run:
+```
 uvicorn main:app --reload
 ```
 
-**Key Components:**
-- **API Endpoints:**
-  - Root endpoint: Welcome message.
-  - `/outlets`: Retrieves all outlet records.
-  - `/outlets/{outlet_id}`: Retrieves a specific outlet by its ID.
-- **Chatbot Workflow:**
-  - Uses LangChain/LangGraph to process and validate SQL queries.
-  - Ensures safe query execution with fallback error handling.
+#### API Endpoints:
 
-### 3. `app.py`
+- **Root Endpoint (`/`)**: Displays a welcome message.
+- **Get All Outlets (`/outlets`)**: Retrieves all Subway outlet records.
+- **Get a Specific Outlet (`/outlets/{outlet_id}`)**: Retrieves outlet details by ID.
+- **Execute a Query (`/query`)**:
+  ```python
+  @app.post("/query", response_model=str, summary="Execute a SQL query via LangGraph workflow")
+  ```
+  - Accepts user queries and executes them securely using LangGraph.
+  - Ensures safe query execution with validation and error handling.
+
+### 3. `app.py` (Streamlit Frontend)
 **Purpose:**
-- Provides a user-friendly front end using Streamlit.
-- Displays an interactive Folium map with markers for each Subway outlet.
-- Offers a chatbot interface for querying the outlets database.
+- Displays an interactive map with Subway outlets.
+- Provides a chatbot interface for querying the database.
 
-**Important:**
-Execute `main.py` (the FastAPI server) before running `app.py` to ensure the API endpoints are available.
-
-**How to Run:**
-Start the Streamlit app with:
-```bash
+#### How to Run:
+```
 streamlit run app.py
 ```
 
-**Key Components:**
-- **Map Visualization:**
-  - Uses Folium to create a map centered on Kuala Lumpur.
-  - Adds markers and popups with outlet details.
-- **Chatbot Interface:**
-  - Provides an input box for user queries.
-  - Sends queries to the FastAPI endpoint and displays responses.
+**Features:**
+- **Map Visualization:** Uses Folium to create an interactive map of Kuala Lumpur with outlet markers.
+- **Chatbot Interface:** Users can query outlet data through a chatbot.
+
+---
 
 ## Execution Flow
 
-### Web Scraping & Data Preparation (`scrape.ipynb`):
-1. Scrape outlet data and process working hours.
-2. Geocode addresses with the Google Maps API.
-3. Save the structured data to a SQLite database (`subway.db`).
+### 1. Web Scraping & Data Preparation (`scrape.ipynb`)
+- Scrape outlet data and format working hours.
+- Geocode addresses using Google Maps API.
+- Save data to `subway.db`.
 
-### API Server (`main.py`):
-1. Launch the FastAPI server using:
-   ```bash
-   uvicorn main:app --reload
-   ```
-2. Access endpoints to retrieve or query outlet data.
-3. Utilize the LangChain/LangGraph-powered chatbot for dynamic SQL queries.
+### 2. API Server (`main.py`)
+- Start the FastAPI server:
+```
+uvicorn main:app --reload
+```
+- Access API endpoints or use the chatbot.
 
-### Web Interface (`app.py`):
-1. Run the Streamlit application using:
-   ```bash
-   streamlit run app.py
-   ```
-2. Visualize Subway outlets on an interactive map.
-3. Use the chatbot interface to query the API.
+### 3. Web Interface (`app.py`)
+- Start the Streamlit application:
+```
+streamlit run app.py
+```
+- Visualize Subway outlets on an interactive map.
+- Use the chatbot interface to query the API.
 
-**Note:** Always start `main.py` before running `app.py` to ensure proper API functionality.
+**Note:** Start `main.py` before `app.py` to ensure API functionality.
+
+---
+
+## Demo Images
+
+Refer to the following images for a visual demonstration of the project:
+
+- **Demo Chatbot Query:** `demo2.png` `demo1.png`
+
+---
 
 ## Summary
 
-This project integrates web scraping, API development, and a web-based interactive map to provide comprehensive data on Subway outlets in Kuala Lumpur. With Selenium handling data extraction, FastAPI and LangChain powering the backend, and Streamlit delivering a responsive front end, this project is a robust example of full-stack Python development.
+This project integrates web scraping, API development, and an interactive web application to provide comprehensive Subway outlet data for Kuala Lumpur. Selenium handles data extraction, FastAPI and LangChain power the backend, and Streamlit delivers a user-friendly interface.
