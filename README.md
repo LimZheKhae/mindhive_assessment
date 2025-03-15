@@ -12,7 +12,7 @@ Ensure [Anaconda](https://www.anaconda.com/products/individual) is installed on 
 ### Create and Activate a Conda Environment
 Run the following commands:
 ```
-conda create --name mindhive_assessment python=3.9
+conda create --name mindhive_assessment python=3.11
 conda activate mindhive_assessment
 ```
 
