@@ -148,8 +148,8 @@ streamlit run app.py
 
 Refer to the following images for a visual demonstration of the project:
 
-- **Demo Chatbot Query:** `demo2.png` `demo1.png`
-![alt text](https://github.com/LimZheKhae/mindhive_assessment/blob/main/demo1.png)
+- **Demo:**
+![Demo](https://raw.githubusercontent.com/LimZheKhae/mindhive_assessment/main/demo1.png)
 
 
 ---
