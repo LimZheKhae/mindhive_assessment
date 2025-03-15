@@ -120,10 +120,10 @@ streamlit run app.py
 
 ## Execution Flow
 
-### 1. Web Scraping & Data Preparation (`scrape.ipynb`)
-- Scrape outlet data and format working hours.
-- Geocode addresses using Google Maps API.
-- Save data to `subway.db`.
+### 1. (Optional) Web Scraping & Data Preparation (`scrape.ipynb`)
+- If you want to scrape data yourself, run `scrape.ipynb`
+- Otherwise, skip this step and use the provided `subway.db`
+- Skipping this step also means you can ignore the Selenium and Google Maps API setup.
 
 ### 2. API Server (`main.py`)
 - Start the FastAPI server:
