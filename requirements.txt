@@ -15,3 +15,4 @@ folium
 streamlit-folium
 requests
 langchain-experimental
+sqlalchemy
