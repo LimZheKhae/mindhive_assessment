@@ -85,26 +85,20 @@ GROQ_API_KEY=your_groq_api_key
 - Updates missing geocodes using Google Maps API.
 - Saves data into a SQLite database (`subway.db`).
 
-### 2. `main.py` (FastAPI Backend)
+### 2. subway.db (Output From scrape.ipynb)
 **Purpose:**
-- Provides API endpoints to retrieve Subway outlet data.
-- Implements a chatbot workflow using LangChain/LangGraph for dynamic SQL query processing.
+- SQLite database that stores Subway outlet details, including name, address, working hours (work_day_start, work_day_end, start_time, end_time), and geolocation data(latitude, longitude).
+- This file is already provided, so users can skip running scrape.ipynb and setting up the Google Maps API and Selenium.
 
-### 3. `app.py` (Front-End Web UI)
-**Purpose:**
-- Provides a user-friendly interface using Streamlit.
-- Allows users to query Subway store details via chatbot interaction.
-- Displays store information retrieved from the FastAPI backend.
-
-### 4. `AI agent_testing.ipynb` (Testing AI Agent interact with SQL)
+### 3. `AI agent_testing.ipynb` (Testing AI Agent interact with SQL)
 **Purpose:**
 - Tests the AI agent’s ability to process user queries.
 - Evaluates chatbot responses and SQL query generation accuracy.
 
-### 5. `subway.db` (Output From scrape.ipynb)
+### 4. `main.py` (FastAPI Backend)
 **Purpose:**
-- SQLite database that stores Subway outlet details, including `name`, `address`, working hours (`work_day_start`, `work_day_end`, `start_time`, `end_time`), and geolocation data(`latitude`, `longitude`).
-- This file is pre-generated, so users **do not need to run** `scrape.ipynb` or set up the Google Maps API and Selenium.
+- Provides API endpoints to retrieve Subway outlet data.
+- Implements a chatbot workflow using LangChain/LangGraph for dynamic SQL query processing.
 
 #### How to Run:
 ```
@@ -118,7 +112,7 @@ uvicorn main:app --reload
 - **Get a Specific Outlet (`/outlets/{outlet_id}`)**: Retrieves outlet details by ID.
 - **Execute a Query (`/query`)**: AI agents process natural language queries to retrieve relevant outlet information.
 
-### 3. `app.py` (Streamlit Frontend)
+### 5. `app.py` (Streamlit Frontend)
 **Purpose:**
 - Displays an interactive map with Subway outlets.
 - Provides a chatbot interface for querying the database.
@@ -137,7 +131,7 @@ streamlit run app.py
 ## Execution Flow
 
 ### 1. (Optional) Web Scraping & Data Preparation (`scrape.ipynb`)
-- If you want to scrape data yourself, run `scrape.ipynb`
+- If you want to scrape data yourself, delete the `subway.db` and run `scrape.ipynb`
 - Otherwise, skip this step and use the provided `subway.db`
 - Skipping this step also means you can ignore the Selenium and Google Maps API setup.
 
