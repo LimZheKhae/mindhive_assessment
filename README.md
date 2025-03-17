@@ -78,17 +78,33 @@ GROQ_API_KEY=your_groq_api_key
 
 ## Project Structure
 
-### 1. `scrape.ipynb`
+### 1. `scrape.ipynb` (Web Scraping & Database Creation)
 **Purpose:**
 - Scrapes Subway store details (name, address, working hours) from Subway Malaysia for Kuala Lumpur branches.
 - Normalizes working hours format.
-- Saves data into a SQLite database (`subway.db`).
 - Updates missing geocodes using Google Maps API.
+- Saves data into a SQLite database (`subway.db`).
 
 ### 2. `main.py` (FastAPI Backend)
 **Purpose:**
 - Provides API endpoints to retrieve Subway outlet data.
 - Implements a chatbot workflow using LangChain/LangGraph for dynamic SQL query processing.
+
+### 3. `app.py` (Front-End Web UI)
+**Purpose:**
+- Provides a user-friendly interface using Streamlit.
+- Allows users to query Subway store details via chatbot interaction.
+- Displays store information retrieved from the FastAPI backend.
+
+### 4. `AI agent_testing.ipynb` (Testing AI Agent interact with SQL)
+**Purpose:**
+- Tests the AI agent’s ability to process user queries.
+- Evaluates chatbot responses and SQL query generation accuracy.
+
+### 5. `subway.db` (Output From scrape.ipynb)
+**Purpose:**
+- SQLite database that stores Subway outlet details, including `name`, `address`, working hours (`work_day_start`, `work_day_end`, `start_time`, `end_time`), and geolocation data(`latitude`, `longitude`).
+- This file is pre-generated, so users **do not need to run** `scrape.ipynb` or set up the Google Maps API and Selenium.
 
 #### How to Run:
 ```
