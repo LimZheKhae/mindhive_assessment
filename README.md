@@ -88,7 +88,6 @@ GROQ_API_KEY=your_groq_api_key
 ### 2. `subway.db` (Output From scrape.ipynb)
 **Purpose:**
 - SQLite database that stores Subway outlet details, including `name`, `address`, working hours (`work_day_start`, `work_day_end`, `start_time`, `end_time`), and geolocation data(`latitude`, `longitude`).
-- This file is already provided, so users can skip running `scrape.ipynb` and setting up the Google Maps API and Selenium.
 
 ### 3. `AI agent_testing.ipynb` (Testing AI Agent interact with SQL)
 **Purpose:**
