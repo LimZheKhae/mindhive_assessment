@@ -85,10 +85,10 @@ GROQ_API_KEY=your_groq_api_key
 - Updates missing geocodes using Google Maps API.
 - Saves data into a SQLite database (`subway.db`).
 
-### 2. subway.db (Output From scrape.ipynb)
+### 2. `subway.db` (Output From scrape.ipynb)
 **Purpose:**
-- SQLite database that stores Subway outlet details, including name, address, working hours (work_day_start, work_day_end, start_time, end_time), and geolocation data(latitude, longitude).
-- This file is already provided, so users can skip running scrape.ipynb and setting up the Google Maps API and Selenium.
+- SQLite database that stores Subway outlet details, including `name`, `address`, working hours (`work_day_start`, `work_day_end`, `start_time`, `end_time`), and geolocation data(`latitude`, `longitude`).
+- This file is already provided, so users can skip running `scrape.ipynb` and setting up the Google Maps API and Selenium.
 
 ### 3. `AI agent_testing.ipynb` (Testing AI Agent interact with SQL)
 **Purpose:**
@@ -131,8 +131,8 @@ streamlit run app.py
 ## Execution Flow
 
 ### 1. (Optional) Web Scraping & Data Preparation (`scrape.ipynb`)
-- If you want to scrape data yourself, delete the `subway.db` and run `scrape.ipynb`
-- Otherwise, skip this step and use the provided `subway.db`
+- If you want to scrape data yourself, run `scrape.ipynb`.
+- Otherwise, skip this step and use the provided `subway.db`.
 - Skipping this step also means you can ignore the Selenium and Google Maps API setup.
 
 ### 2. API Server (`main.py`)
